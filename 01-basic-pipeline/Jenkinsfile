@@ -1,0 +1,50 @@
+
+---
+
+## ⚙️ Jenkinsfile
+
+Below is the Declarative Pipeline script used for this project:
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo "📦 Cloning repository..."
+                git branch: 'main', url: 'https://github.com/venkataramireddy1999/jenkins-projects.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo "🏗️ Building the application..."
+                sh 'echo "Build successful!"'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo "🧪 Running tests..."
+                sh 'echo "All test cases passed successfully!"'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo "🚀 Deploying the application..."
+                sh 'echo "Application deployed successfully to test environment!"'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Pipeline executed successfully!"
+        }
+        failure {
+            echo "❌ Pipeline failed. Please check the logs."
+        }
+    }
+}
