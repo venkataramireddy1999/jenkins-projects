@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_ACCESS_KEY_ID = credentials('aws-access-key')
+        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-key')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/venkataramireddy1999/jenkins-projects.git'
+            }
+        }
+
+        stage('Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+
+        stage('Validate') {
+            steps {
+                sh 'terraform validate'
+            }
+        }
+
+        stage('Plan') {
+            steps {
+                sh 'terraform plan -out=tfplan'
+            }
+        }
+
+        stage('Apply') {
+            steps {
+                sh 'terraform apply -auto-approve tfplan'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Infrastructure successfully deployed on AWS!"
+        }
+        failure {
+            echo "❌ Deployment failed. Check Jenkins logs."
+        }
+    }
+}
