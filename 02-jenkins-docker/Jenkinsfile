@@ -9,14 +9,27 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/venkataramireddy1999/jenkins-projects'
+                git branch: 'main', 
+                    url: 'https://github.com/venkataramireddy1999/jenkins-projects.git'
+            }
+        }
+
+        stage('Change to Subdirectory') {
+            steps {
+                dir('02-jenkins-docker') {
+                    script {
+                        echo "Working in: ${pwd()}"
+                    }
+                }
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    sh 'docker build -t $IMAGE_NAME:latest .'
+                dir('02-jenkins-docker') {
+                    script {
+                        sh 'docker build -t $IMAGE_NAME:latest .'
+                    }
                 }
             }
         }
