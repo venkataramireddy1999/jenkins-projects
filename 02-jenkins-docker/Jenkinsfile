@@ -17,9 +17,10 @@ pipeline {
         stage('Change to Subdirectory') {
             steps {
                 dir('02-jenkins-docker') {
-                    script {
-                        echo "Working in: ${pwd()}"
-                    }
+                    bat """
+                        echo Working in: %CD%
+                        dir
+                    """
                 }
             }
         }
@@ -27,26 +28,22 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 dir('02-jenkins-docker') {
-                    script {
-                        sh 'docker build -t $IMAGE_NAME:latest .'
-                    }
+                    bat 'docker build -t %IMAGE_NAME%:latest .'
                 }
             }
         }
 
         stage('Login to Docker Hub') {
             steps {
-                script {
-                    sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-                }
+                bat """
+                    echo %DOCKERHUB_CREDENTIALS_PSW% | docker login -u %DOCKERHUB_CREDENTIALS_USR% --password-stdin
+                """
             }
         }
 
         stage('Push to Docker Hub') {
             steps {
-                script {
-                    sh 'docker push $IMAGE_NAME:latest'
-                }
+                bat 'docker push %IMAGE_NAME%:latest'
             }
         }
     }
