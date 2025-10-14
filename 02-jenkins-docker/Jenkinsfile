@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/venkataramireddy1999/jenkins-projects.git'
+                git 'https://github.com/venkataramireddy1999/jenkins-projects/blob/main/02-jenkins-docker'
             }
         }
 
