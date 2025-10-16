@@ -88,6 +88,7 @@ In the next project, we’ll extend this pipeline to:
 
 **Venkata Rami Reddy Bobbala**  
 📧 [venkataramireddy1999@gmail.com](mailto:venkataramireddy1999@gmail.com)
+
 🔗 [LinkedIn](https://www.linkedin.com/in/venkataramireddy-bobbala/)  
 🐙 [GitHub](https://github.com/venkataramireddy1999)
 
